@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 
 const Inventory = () => {
-  let [allList, setAllList]=useState ([]);
-  let [productName, setProductName]= useState();
-  let [productQuantity, setProductQuantity]= useState();
-  let [productPrice, setProductPrice]= useState();
+  let [allList, setAllList] = useState([]);
+  let [productName, setProductName] = useState();
+  let [productQuantity, setProductQuantity] = useState();
+  let [productPrice, setProductPrice] = useState();
 
-
-  let addBtn= (event)=>{
+  let addBtn = (event) => {
     event.preventDefault();
-    setProductName(event.target.name.value);
-    setProductQuantity(event.target.number1.value);
-    setProductPrice(event.target.number2.value);
 
-    let newProduct={
+    let newProduct = {
       name: productName,
       quantity: productQuantity,
       price: productPrice,
-    }
-    setAllList ([...allList, newProduct]);
-  }
+    };
+    setAllList([...allList, newProduct]);
+  };
+
+let deleteItem= (index)=>{
+  console.log(index);
+  let upadteValue= allList.splice((new)=> new.index !== index);
+  
+}
 
   return (
     <>
@@ -34,7 +36,7 @@ const Inventory = () => {
                 <input
                   type="text"
                   placeholder="Product Name"
-                  name="name"
+                  onChange={(e) => setProductName(e.target.value)}
                   className="p-2 w-full border-1 rounded-md outline-none"
                 />
               </div>
@@ -43,7 +45,7 @@ const Inventory = () => {
                 <input
                   type="number"
                   placeholder="Quantity"
-                  name="number1"
+                  onChange={(e) => setProductQuantity(e.target.value)}
                   className="p-2 w-full border-1 rounded-md outline-none"
                 />
               </div>
@@ -52,7 +54,7 @@ const Inventory = () => {
                 <input
                   type="number"
                   placeholder="Price"
-                  name="number2"
+                  onChange={(e) => setProductPrice(e.target.value)}
                   className="p-2 w-full border-1 rounded-md outline-none"
                 />
               </div>
@@ -66,7 +68,7 @@ const Inventory = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold mb-5 text-center">
+            <h2 className="text-2xl font-semibold mb-5 text-center text-blue-500">
               Product List
             </h2>
             <div>
@@ -85,8 +87,34 @@ const Inventory = () => {
                     </td>
                   </tr>
                 </thead>
+                <tbody>
+                  {allList.map((stock, index) => {
+                    return (
+                      <>
+                        <tr key={index}>
+                          <td className="py-2 px-3 border-1">
+                            {stock.name}
+                          </td>
 
+                          <td className="py-2 px-3 border-1">
+                            {stock.quantity}
+                          </td>
 
+                          <td className="py-2 px-3 border-1">
+                            {stock.price}
+                          </td>
+
+                          <td className="py-2 px-3 border-1">
+                           <i class="ri-delete-bin-6-line text-[27px] hover:text-red-600 cursor-pointer" 
+                           onClick={()=>deleteItem(index)}
+                           ></i>
+                          </td>
+
+                        </tr>
+                      </>
+                    );
+                  })}
+                </tbody>
               </table>
             </div>
           </div>
