@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Inventory = () => {
+  let [allList, setAllList]=useState ([]);
+  let [productName, setProductName]= useState();
+  let [productQuantity, setProductQuantity]= useState();
+  let [productPrice, setProductPrice]= useState();
+
+
+  let addBtn= (event)=>{
+    event.preventDefault();
+    setProductName(event.target.name.value);
+    setProductQuantity(event.target.number1.value);
+    setProductPrice(event.target.number2.value);
+
+    let newProduct={
+      name: productName,
+      quantity: productQuantity,
+      price: productPrice,
+    }
+    setAllList ([...allList, newProduct]);
+  }
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 p-8">
@@ -9,7 +29,7 @@ const Inventory = () => {
             Inventory Management
           </h1>
           <div>
-            <form action="">
+            <form action="#" onSubmit={addBtn}>
               <div className="mb-6">
                 <input
                   type="text"
@@ -65,6 +85,8 @@ const Inventory = () => {
                     </td>
                   </tr>
                 </thead>
+
+
               </table>
             </div>
           </div>
