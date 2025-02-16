@@ -6,22 +6,32 @@ const Inventory = () => {
   let [productQuantity, setProductQuantity] = useState();
   let [productPrice, setProductPrice] = useState();
 
-  let addBtn = (event) => {
-    event.preventDefault();
 
-    let newProduct = {
-      name: productName,
-      quantity: productQuantity,
-      price: productPrice,
-    };
-    setAllList([...allList, newProduct]);
-  };
+    let addBtn = (event) => {
+      event.preventDefault();
 
-let deleteItem= (index)=>{
-  console.log(index);
-  let upadteValue= allList.splice((new)=> new.index !== index);
-  
-}
+      let newProduct = {
+        name: productName,
+        quantity: productQuantity,
+        price: productPrice,
+      };
+
+        setAllList([...allList, newProduct]);
+    
+    }
+
+    
+    
+
+  let deleteItem= (index)=>{
+    console.log(index);
+    let upadteValue= [...allList];
+    upadteValue.splice(index, 1);
+    setAllList([...upadteValue]);
+
+    
+  }
+
 
   return (
     <>
@@ -71,6 +81,18 @@ let deleteItem= (index)=>{
             <h2 className="text-2xl font-semibold mb-5 text-center text-blue-500">
               Product List
             </h2>
+
+            <div>
+            <div className="mb-6">
+                <input
+                  type="text"
+                  placeholder="Search Product Name"
+                  onChange={searchFilter}
+                  className="p-2 w-[300px] border-1 rounded-md outline-none"
+                />
+              </div>
+            </div>
+
             <div>
               <table className=" w-full border-black border-1 text-center ">
                 <thead>
@@ -101,7 +123,7 @@ let deleteItem= (index)=>{
                           </td>
 
                           <td className="py-2 px-3 border-1">
-                            {stock.price}
+                          ₹ {stock.price}
                           </td>
 
                           <td className="py-2 px-3 border-1">
