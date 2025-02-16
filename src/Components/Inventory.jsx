@@ -6,7 +6,8 @@ const Inventory = () => {
   let [productQuantity, setProductQuantity] = useState("");
   let [productPrice, setProductPrice] = useState("");
 
-  let addBtn = () => {
+  let addBtn = (e) => {
+    e.preventDefault();
     let newProduct = {
       name: productName,
       quantity: productQuantity,
@@ -21,9 +22,6 @@ const Inventory = () => {
 
   let searchFilter = (e) => {
     let searchinput = e.target.value;
-    if (searchinput === "") {
-      setAllList([...allList]);
-    }
 
     let newFilter = allList.filter((item) => {
       return item.name.toUpperCase().includes(searchinput.toUpperCase());
@@ -46,44 +44,46 @@ const Inventory = () => {
             Inventory Management
           </h1>
           <div>
-            <div className="mb-6">
-              <input
-                type="text"
-                placeholder="Product Name"
-                value={productName}
-                onChange={(e) => setProductName(e.target.value)}
-                className="p-2 w-full border-1 rounded-md outline-none"
-              />
-            </div>
+            <form action="#" onSubmit={addBtn}>
+              <div className="mb-6">
+                <input
+                  type="text"
+                  placeholder="Product Name"
+                  required
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                  className="p-2 w-full border-1 rounded-md outline-none"
+                />
+              </div>
 
-            <div className="mb-6">
-              <input
-                type="number"
-                value={productQuantity}
-                placeholder="Quantity"
-                onChange={(e) => setProductQuantity(e.target.value)}
-                className="p-2 w-full border-1 rounded-md outline-none"
-              />
-            </div>
+              <div className="mb-6">
+                <input
+                  type="number"
+                  value={productQuantity}
+                  placeholder="Quantity"
+                  required
+                  onChange={(e) => setProductQuantity(e.target.value)}
+                  className="p-2 w-full border-1 rounded-md outline-none"
+                />
+              </div>
 
-            <div className="mb-6">
-              <input
-                type="number"
-                placeholder="Price"
-                value={productPrice}
-                onChange={(e) => setProductPrice(e.target.value)}
-                className="p-2 w-full border-1 rounded-md outline-none"
-              />
-            </div>
+              <div className="mb-6">
+                <input
+                  type="number"
+                  placeholder="Price"
+                  required
+                  value={productPrice}
+                  onChange={(e) => setProductPrice(e.target.value)}
+                  className="p-2 w-full border-1 rounded-md outline-none"
+                />
+              </div>
 
-            <div className="mb-6">
-              <button
-                className="p-2 w-full border-none rounded-md outline-none bg-blue-500 font-bold text-[17px] cursor-pointer"
-                onClick={addBtn}
-              >
-                Add Product
-              </button>
-            </div>
+              <div className="mb-6">
+                <button className="p-2 w-full border-none rounded-md outline-none bg-blue-500 font-bold text-[17px] cursor-pointer">
+                  Add Product
+                </button>
+              </div>
+            </form>
           </div>
 
           <div>
