@@ -2,36 +2,41 @@ import React, { useState } from "react";
 
 const Inventory = () => {
   let [allList, setAllList] = useState([]);
-  let [productName, setProductName] = useState();
-  let [productQuantity, setProductQuantity] = useState();
-  let [productPrice, setProductPrice] = useState();
+  let [productName, setProductName] = useState("");
+  let [productQuantity, setProductQuantity] = useState("");
+  let [productPrice, setProductPrice] = useState("");
 
+  let addBtn = () => {
+    let newProduct = {
+      name: productName,
+      quantity: productQuantity,
+      price: productPrice,
+    };
 
-    let addBtn = (event) => {
-      event.preventDefault();
+    setAllList([...allList, newProduct]);
+    setProductName("");
+    setProductQuantity("");
+    setProductPrice("");
+  };
 
-      let newProduct = {
-        name: productName,
-        quantity: productQuantity,
-        price: productPrice,
-      };
-
-        setAllList([...allList, newProduct]);
-    
+  let searchFilter = (e) => {
+    let searchinput = e.target.value;
+    if (searchinput === "") {
+      setAllList([...allList]);
     }
 
-    
-    
+    let newFilter = allList.filter((item) => {
+      return item.name.toUpperCase().includes(searchinput.toUpperCase());
+    });
+    setAllList(newFilter);
+  };
 
-  let deleteItem= (index)=>{
+  let deleteItem = (index) => {
     console.log(index);
-    let upadteValue= [...allList];
+    let upadteValue = [...allList];
     upadteValue.splice(index, 1);
     setAllList([...upadteValue]);
-
-    
-  }
-
+  };
 
   return (
     <>
@@ -41,40 +46,44 @@ const Inventory = () => {
             Inventory Management
           </h1>
           <div>
-            <form action="#" onSubmit={addBtn}>
-              <div className="mb-6">
-                <input
-                  type="text"
-                  placeholder="Product Name"
-                  onChange={(e) => setProductName(e.target.value)}
-                  className="p-2 w-full border-1 rounded-md outline-none"
-                />
-              </div>
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="Product Name"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+                className="p-2 w-full border-1 rounded-md outline-none"
+              />
+            </div>
 
-              <div className="mb-6">
-                <input
-                  type="number"
-                  placeholder="Quantity"
-                  onChange={(e) => setProductQuantity(e.target.value)}
-                  className="p-2 w-full border-1 rounded-md outline-none"
-                />
-              </div>
+            <div className="mb-6">
+              <input
+                type="number"
+                value={productQuantity}
+                placeholder="Quantity"
+                onChange={(e) => setProductQuantity(e.target.value)}
+                className="p-2 w-full border-1 rounded-md outline-none"
+              />
+            </div>
 
-              <div className="mb-6">
-                <input
-                  type="number"
-                  placeholder="Price"
-                  onChange={(e) => setProductPrice(e.target.value)}
-                  className="p-2 w-full border-1 rounded-md outline-none"
-                />
-              </div>
+            <div className="mb-6">
+              <input
+                type="number"
+                placeholder="Price"
+                value={productPrice}
+                onChange={(e) => setProductPrice(e.target.value)}
+                className="p-2 w-full border-1 rounded-md outline-none"
+              />
+            </div>
 
-              <div className="mb-6">
-                <button className="p-2 w-full border-none rounded-md outline-none bg-blue-500 font-bold text-[17px] cursor-pointer">
-                  Add Product
-                </button>
-              </div>
-            </form>
+            <div className="mb-6">
+              <button
+                className="p-2 w-full border-none rounded-md outline-none bg-blue-500 font-bold text-[17px] cursor-pointer"
+                onClick={addBtn}
+              >
+                Add Product
+              </button>
+            </div>
           </div>
 
           <div>
@@ -83,7 +92,7 @@ const Inventory = () => {
             </h2>
 
             <div>
-            <div className="mb-6">
+              <div className="mb-6">
                 <input
                   type="text"
                   placeholder="Search Product Name"
@@ -114,24 +123,22 @@ const Inventory = () => {
                     return (
                       <>
                         <tr key={index}>
-                          <td className="py-2 px-3 border-1">
-                            {stock.name}
-                          </td>
+                          <td className="py-2 px-3 border-1">{stock.name}</td>
 
                           <td className="py-2 px-3 border-1">
                             {stock.quantity}
                           </td>
 
                           <td className="py-2 px-3 border-1">
-                          ₹ {stock.price}
+                            ₹ {stock.price}
                           </td>
 
                           <td className="py-2 px-3 border-1">
-                           <i class="ri-delete-bin-6-line text-[27px] hover:text-red-600 cursor-pointer" 
-                           onClick={()=>deleteItem(index)}
-                           ></i>
+                            <i
+                              class="ri-delete-bin-6-line text-[27px] hover:text-red-600 cursor-pointer"
+                              onClick={() => deleteItem(index)}
+                            ></i>
                           </td>
-
                         </tr>
                       </>
                     );
